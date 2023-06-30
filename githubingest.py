@@ -143,7 +143,12 @@ def load_model():
         os.makedirs("models")
     
     if not os.path.exists("models/%s" % modelname):
-        modelurl = "https://gpt4all.io/models/%s" % modelname
+        # Check if url exists in os.getenv
+        modelurl = os.getenv('MODEL_URL', '')
+
+        if len(modelurl) == 0:
+            modelurl = "https://gpt4all.io/models/%s" % modelname
+
         print("Downloading model from url %s. Could take a while (gigabytes to download)." % modelurl)
 
         request = requests.get(modelurl, stream=True)
