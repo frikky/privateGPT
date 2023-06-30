@@ -38,13 +38,18 @@ def main():
     # Prepare the LLM
     if model_type == "LlamaCpp":
         #llm = LlamaCpp(model_path=model_path, n_ctx=model_n_ctx, n_batch=model_n_batch, callbacks=callbacks, verbose=True, n_threads=32)
+        print("Loading model LlamaCpp")
+
         llm = LlamaCpp(model_path=model_path, n_ctx=model_n_ctx, callbacks=callbacks, verbose=True, n_gpu_layers=n_gpu_layers, use_mlock=use_mlock, top_p=0.9, n_batch=n_batch)
     elif "GPT4All":
+        print("Loading model GPT4All")
+
         llm = GPT4All(model=model_path, n_ctx=model_n_ctx, backend='gptj', n_batch=model_n_batch, callbacks=callbacks, verbose=True, n_threads=32)
     else:
         # raise exception if model_type is not supported
         raise Exception(f"Model type {model_type} is not supported. Please choose one of the following: LlamaCpp, GPT4All")
         
+    print("Starting retrieval QA")
     qa = RetrievalQA.from_chain_type(llm=llm, chain_type="stuff", retriever=retriever, return_source_documents=True)
     # Interactive questions and answers
     while True:
@@ -56,6 +61,7 @@ def main():
 
         # Get the answer from the chain
         start = time.time()
+        print("Running QA")
         res = qa(query)
         answer, docs = res['result'], [] if args.hide_source else res['source_documents']
         end = time.time()
