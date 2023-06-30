@@ -135,7 +135,10 @@ def load_model():
     if not os.path.exists("db"):
         os.makedirs("db")
 
-    modelname = "ggml-gpt4all-j-v1.3-groovy.bin"
+    modelname = os.getenv('MODEL_PATH', 'ggml-gpt4all-j-v1.3-groovy.bin')
+    if "/" in modelname:
+        modelname = modelname.split("/")[-1]
+
     if not os.path.exists("models"):
         os.makedirs("models")
     
