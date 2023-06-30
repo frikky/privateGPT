@@ -2,6 +2,7 @@ import os
 import time
 import github 
 import tempfile
+import requests
 
 from constants import CHROMA_SETTINGS
 
@@ -140,14 +141,13 @@ def load_model():
     
     if not os.path.exists("models/%s" % modelname):
         modelurl = "https://gpt4all.io/models/%s" % modelname
-        print("Downloading model from url %s" % modelurl)
+        print("Downloading model from url %s. Could take a while (gigabytes to download)." % modelurl)
 
         request = requests.get(modelurl, stream=True)
         with open("models/%s" % modelname, "wb") as file:
-            for chunk in request.iter_content(chunk_size=1024):
+            for chunk in request.iter_content(chunk_size=2048):
                 if chunk:
                     file.write(chunk)
-                    file.flush()
 
 def main():
     load_model()
