@@ -6,6 +6,8 @@ load_dotenv()
 
 # Define the folder for storing database
 PERSIST_DIRECTORY = os.environ.get('PERSIST_DIRECTORY')
+if not PERSIST_DIRECTORY:
+    PERSIST_DIRECTORY = "db"
 
 # Define the Chroma settings
 CHROMA_SETTINGS = Settings(
