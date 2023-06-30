@@ -130,8 +130,27 @@ def load_github():
         except requests.exceptions.ConnectionError as e:
             print("Timed out. Trying again: %s" % e)
 
+def load_model():
+    if not os.path.exists("db"):
+        os.makedirs("db")
+
+    modelname = "ggml-gpt4all-j-v1.3-groovy.bin"
+    if not os.path.exists("models"):
+        os.makedirs("models")
+    
+    if not os.path.exists("models/%s" % modelname):
+        modelurl = "https://gpt4all.io/models/%s" % modelname
+        print("Downloading model from url %s" % modelurl)
+
+        request = requests.get(modelurl, stream=True)
+        with open("models/%s" % modelname, "wb") as file:
+            for chunk in request.iter_content(chunk_size=1024):
+                if chunk:
+                    file.write(chunk)
+                    file.flush()
 
 def main():
+    load_model()
     load_github()
 
 if __name__ == "__main__":
