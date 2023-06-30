@@ -34,6 +34,8 @@ load_dotenv()
 persist_directory = os.environ.get('PERSIST_DIRECTORY')
 source_directory = os.environ.get('SOURCE_DIRECTORY', 'source_documents')
 embeddings_model_name = os.environ.get('EMBEDDINGS_MODEL_NAME')
+
+
 chunk_size = 500
 chunk_overlap = 50
 
@@ -71,15 +73,19 @@ LOADER_MAPPING = {
     ".eml": (MyElmLoader, {}),
     ".epub": (UnstructuredEPubLoader, {}),
     ".html": (UnstructuredHTMLLoader, {}),
-    ".md": (UnstructuredMarkdownLoader, {}),
     ".odt": (UnstructuredODTLoader, {}),
     ".pdf": (PyMuPDFLoader, {}),
     ".ppt": (UnstructuredPowerPointLoader, {}),
     ".pptx": (UnstructuredPowerPointLoader, {}),
     ".txt": (TextLoader, {"encoding": "utf8"}),
+
     # Add more mappings for other file extensions and loaders as needed
+    ".md": (UnstructuredMarkdownLoader, {}),
 }
 
+## Website scraper
+## Github repo reader
+# https://github.com/hwchase17/langchain/issues/2436
 
 def load_single_document(file_path: str) -> List[Document]:
     ext = "." + file_path.rsplit(".", 1)[-1]

@@ -1,5 +1,13 @@
-langchain==0.0.197
-gpt4all==0.3.4
+PyGithub==1.58.2
+
+# Compile python after installing:
+# pysqlite==2.8.2
+# pysqlite3
+# bz2
+# libsqlite3-dev
+
+langchain==0.0.208
+gpt4all==0.3.5
 chromadb==0.3.23
 llama-cpp-python==0.1.50
 urllib3==2.0.2
@@ -11,3 +19,5 @@ tabulate==0.9.0
 pandoc==2.3
 pypandoc==1.11
 tqdm==4.65.0
+
+# sudo apt install libbz2-dev
